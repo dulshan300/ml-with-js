@@ -1,1 +1,37 @@
-/*# sourceMappingURL=style.css.map */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  overscroll-behavior: none;
+}
+
+body {
+  background: skyblue;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  background: navy;
+  border: none;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: mediumblue;
+}
+.btn:disabled {
+  background-color: gray;
+  cursor: default;
+}
+
+#sketchContainer {
+  visibility: hidden;
+}/*# sourceMappingURL=style.css.map */

@@ -10,7 +10,90 @@
 
 <body>
 
-    <script src="sktchpad.js"></script>
+    <div id="content">
+
+        <h1>Data Creator</h1>
+        <br>
+        <div class="">
+            <input type="text" id="student">
+            <span id="instructions"></span>
+            <button class="btn" id="advanceBtn" onclick="start()">START</button>
+        </div>
+        <br>
+        <div id="sketchContainer"></div>
+
+    </div>
+
+    <script src="draw.js"></script>
+    <script src="sketchPad.js"></script>
+    <script>
+
+        let index = 0;
+        const labels = ["car", 'fish', 'house', 'tree', 'bicycle', 'clock', 'guitar'];
+
+        const data = {
+            student: null,
+            session: new Date().getTime(),
+            drawings: {}
+        }
+
+        const skp = new SketchPad(sketchContainer)
+
+
+        const start = () => {
+            if (student.value == "") {
+                alert("Enter your name");
+                return;
+            }
+
+            instructions.innerText = `please draw a ${labels[index]}`
+
+            data.student = student.value;
+            student.style.display = "none"
+            sketchContainer.style.visibility = "visible"
+
+            advanceBtn.innerHTML = "NEXT";
+            advanceBtn.onclick = next;
+        }
+
+        const next = () => {
+
+            if (skp.paths.length == 0) {
+                alert("draw something frist..")
+                return;
+            }
+
+            data.drawings[labels[index]] = skp.paths;
+            skp.reset()
+
+            index++;
+            instructions.innerText = `please draw a ${labels[index]}`
+
+            if (index == labels.length - 1) {
+                advanceBtn.innerHTML = "SAVE";
+                advanceBtn.onclick = save;
+            }
+        }
+
+        const save = () => {
+            advanceBtn.style.display = 'none';
+            instructions.innerText = "Take your downloaded file as the datasetd"
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)))
+
+            const fileName = data.session + ".json";
+            element.setAttribute('download', fileName)
+            element.style.display = "none";
+            document.body.appendChild(element);
+            element.click()
+            document.body.removeChild(element)
+
+        }
+
+        console.log(data)
+
+    </script>
 </body>
 
 </html>
